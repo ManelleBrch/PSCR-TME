@@ -7,12 +7,12 @@
 
 #include "HashTable.h"
 
-HashTable::HashTable() {
+//HashTable::HashTable() {
 	// TODO Auto-generated constructor stub
 
-}
+//}
 
-HashTable::~HashTable() {
+//HashTable::~HashTable() {
 	// TODO Auto-generated destructor stub
-}
+//}
 
