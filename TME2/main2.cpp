@@ -2,9 +2,10 @@
 #include <fstream>
 #include <regex>
 #include <chrono>
-#include  <vector>
+#include <string>
+#include "HashTable.h"
 
-/*int main () {
+int main () {
 	using namespace std;
 	using namespace std::chrono;
 
@@ -19,7 +20,7 @@
 	// une regex qui reconnait les caractères anormaux (négation des lettres)
 	regex re( R"([^a-zA-Z])");
 
-	vector< pair<string, int> > vect;
+	HashTable<string, int> h_tab;
 
 	while (input >> word) {
 		// élimine la ponctuation et les caractères spéciaux
@@ -27,17 +28,13 @@
 		// passe en lowercase
 		transform(word.begin(),word.end(),word.begin(),::tolower);
 
-		size_t i=0;
-		for(i; i < vect.size(); i++){
-			if (word == vect[i].first){ //vect[i].first pour recupérer la string
-				vect[i].second ++; //vect[i].seconde pour récupérer le int
-				break;
-			}
+		int * val_cpt = h_tab.get(word);
+		if(val_cpt){
+			*val_cpt+=1;
 		}
-		if(i==vect.size()){
-			vect.push_back(std::make_pair(word, 1));
+		if(!val_cpt){
+			h_tab.put(word, 1);
 		}
-
 
 		// word est maintenant "tout propre"
 		if (nombre_lu % 100 == 0)
@@ -55,22 +52,29 @@
               << "ms.\n";
 
     cout << "Found a total of " << nombre_lu << " words." << endl;
-    cout << "Nombre de mots différents = " << vect.size() << endl;
+    cout << "Nombre de mots différents = " << h_tab.size() << endl;
 
-    size_t i = 0;
-    for(i; i < vect.size(); i++){
-    	if(vect[i].first == "war"){
-    		cout << "Nombre de mots war = " << vect[i].second << endl;
-    	}
-    	if(vect[i].first == "peace"){
-    	    cout << "Nombre de mots peace = " << vect[i].second << endl;
-    	}
-    	if(vect[i].first == "toto"){
-    		cout << "Nombre de mots toto = " << vect[i].second << endl;
-    	}
 
+    if(h_tab.get("war")){
+    	cout << "Nombre de mots war = " << *(h_tab.get("war")) << endl;
     }
+    if(!h_tab.get("war")){
+    	cout << "Nombre de mots war = 0" << endl;
+    }
+    if(h_tab.get("peace")){
+        cout << "Nombre de mots peace = " << *(h_tab.get("peace")) << endl;
+    }
+    if(!h_tab.get("peace")){
+    	cout << "Nombre de mots peace = 0" << endl;
+    }
+
+    if(h_tab.get("toto")){
+        cout << "Nombre de mots toto = " << *(h_tab.get("toto")) << endl;
+    }
+    if(!h_tab.get("toto")){
+        cout << "Nombre de mots toto = 0" << endl;
+    }
+
     return 0;
 }
-*/
 

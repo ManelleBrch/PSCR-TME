@@ -14,9 +14,11 @@ template <typename K, typename V>
 
 class HashTable {
 
+
 	class Entry{
+	public:
 		const K key;
-		const V value;
+		V value;
 
 		Entry(K k, V v) : key(k), value(v){}
 	};
