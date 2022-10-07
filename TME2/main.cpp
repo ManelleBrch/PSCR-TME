@@ -4,7 +4,30 @@
 #include <chrono>
 #include  <vector>
 
-/*int main () {
+template <typename iterator>
+
+std::size_t count (iterator begin, iterator end){
+	std::size_t cpt = 0;
+	while(begin != end){
+		cpt++;
+		++begin;
+	}
+	return cpt;
+}
+
+template <typename iterator, typename T>
+std::size_t count_if_equal (iterator begin, iterator end, const T & val){
+	std::size_t cpt = 0;
+		while(begin != end){
+			if(val == *begin){
+				cpt++;
+			}
+			++begin;
+		}
+		return cpt;
+}
+
+int main () {
 	using namespace std;
 	using namespace std::chrono;
 
@@ -56,6 +79,7 @@
 
     cout << "Found a total of " << nombre_lu << " words." << endl;
     cout << "Nombre de mots différents = " << vect.size() << endl;
+    cout << "Nombre de mots différents = " << count(vect.begin(), vect.end()) << endl;
 
     size_t i = 0;
     for(i; i < vect.size(); i++){
@@ -70,7 +94,10 @@
     	}
 
     }
+    const string w = "war";
+
+    //cout << "Nombre de mots war = " << count_if_equal(vect.begin(), vect.end(), w) << endl;
     return 0;
 }
-*/
+
 

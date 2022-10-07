@@ -28,14 +28,45 @@ class HashTable {
 	buckets_t buckets;
 	size_t taille;
 
-public:
-	HashTable(size_t init = 100){
-		buckets.reserve(init);
-		for(size_t i = 0; i < init; i++){
-			buckets[i] = std::forward_list<Entry>();
+	class iterator{
+		buckets_t & buck;
+		typename buckets_t::iterator vit;
+		typename std::forward_list<Entry>::iterator lit;
+
+		iterator(buckets_t & buckets){
+			buck=buckets;
+			vit = buck.begin();
+			lit = vit.begin();
 		}
+
+		iterator & operator++(){
+			if(lit == nullptr){
+				vit++;
+			}
+			else{
+				++lit;
+				if(lit == nullptr){
+					vit++;
+					lit = vit.begin();
+				}
+			}
+			return *this;
+		}
+
+	};
+
+
+
+public:
+	HashTable(size_t init = 100):buckets(init){
+//		buckets.reserve(init);
+//		for(size_t i = 0; i < init; i++){
+//			buckets.push_back(std::forward_list<Entry>());
+		//ou buckets.emplace_back();
+//		}
 		taille = 0;
 	}
+
 
 	V* get(const K & key){
 

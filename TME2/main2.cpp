@@ -5,7 +5,32 @@
 #include <string>
 #include "HashTable.h"
 
-int main () {
+template <typename iterator>
+
+std::size_t count (iterator begin, iterator end){
+	std::size_t cpt = 0;
+	while(begin != end){
+		cpt++;
+		++begin;
+	}
+	return cpt;
+}
+
+template <typename iterator, typename T>
+std::size_t count_if_equal (iterator begin, iterator end, const T & val){
+	std::size_t cpt = 0;
+		while(begin != end){
+			if(val == *begin){
+				cpt++;
+			}
+			++begin;
+		}
+		return cpt;
+}
+
+
+
+/*int main () {
 	using namespace std;
 	using namespace std::chrono;
 
@@ -53,6 +78,7 @@ int main () {
 
     cout << "Found a total of " << nombre_lu << " words." << endl;
     cout << "Nombre de mots différents = " << h_tab.size() << endl;
+    cout << "Nombre de mots différents = " << count(h_tab.begin(), h_tab.end()) << endl;
 
 
     if(h_tab.get("war")){
@@ -76,5 +102,5 @@ int main () {
     }
 
     return 0;
-}
+}*/
 
