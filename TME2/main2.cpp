@@ -1,4 +1,4 @@
-#include <iostream>
+/*#include <iostream>
 #include <fstream>
 #include <regex>
 #include <chrono>
@@ -30,7 +30,7 @@ std::size_t count_if_equal (iterator begin, iterator end, const T & val){
 
 
 
-/*int main () {
+int main () {
 	using namespace std;
 	using namespace std::chrono;
 
@@ -78,7 +78,7 @@ std::size_t count_if_equal (iterator begin, iterator end, const T & val){
 
     cout << "Found a total of " << nombre_lu << " words." << endl;
     cout << "Nombre de mots différents = " << h_tab.size() << endl;
-    cout << "Nombre de mots différents = " << count(h_tab.begin(), h_tab.end()) << endl;
+    //cout << "Nombre de mots différents = " << count(h_tab.begin(), h_tab.end()) << endl;
 
 
     if(h_tab.get("war")){
@@ -102,5 +102,5 @@ std::size_t count_if_equal (iterator begin, iterator end, const T & val){
     }
 
     return 0;
-}*/
-
+}
+*/

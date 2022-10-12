@@ -1,8 +1,9 @@
-/*#include <iostream>
+#include <iostream>
 #include <fstream>
 #include <regex>
 #include <chrono>
-#include  <vector>
+#include <string>
+#include "HashTable.h"
 
 template <typename iterator>
 
@@ -27,6 +28,8 @@ std::size_t count_if_equal (iterator begin, iterator end, const T & val){
 		return cpt;
 }
 
+
+
 int main () {
 	using namespace std;
 	using namespace std::chrono;
@@ -42,7 +45,7 @@ int main () {
 	// une regex qui reconnait les caractères anormaux (négation des lettres)
 	regex re( R"([^a-zA-Z])");
 
-	vector< pair<string, int> > vect;
+	HashTable<string, int> h_tab;
 
 	while (input >> word) {
 		// élimine la ponctuation et les caractères spéciaux
@@ -50,17 +53,13 @@ int main () {
 		// passe en lowercase
 		transform(word.begin(),word.end(),word.begin(),::tolower);
 
-		size_t i=0;
-		for(i; i < vect.size(); i++){
-			if (word == vect[i].first){ //vect[i].first pour recupérer la string
-				vect[i].second ++; //vect[i].seconde pour récupérer le int
-				break;
-			}
+		int * val_cpt = h_tab.get(word);
+		if(val_cpt){
+			*val_cpt+=1;
 		}
-		if(i==vect.size()){
-			vect.push_back(std::make_pair(word, 1));
+		if(!val_cpt){
+			h_tab.put(word, 1);
 		}
-
 
 		// word est maintenant "tout propre"
 		if (nombre_lu % 100 == 0)
@@ -78,26 +77,25 @@ int main () {
               << "ms.\n";
 
     cout << "Found a total of " << nombre_lu << " words." << endl;
-    cout << "Nombre de mots différents = " << vect.size() << endl;
-    cout << "Nombre de mots différents = " << count(vect.begin(), vect.end()) << endl;
+    cout << "Nombre de mots différents = " << h_tab.size() << endl;
+    //cout << "Nombre de mots différents = " << count(h_tab.begin(), h_tab.end()) << endl;
+
+
+    vector< pair<string, int> > vect;
+    for(HashTable::Entry & elem : h_tab){
+    	vect.push_back(std::make_pair(elem.key, elem.value));
+    }
+
+    std::sort(vect.begin(), vect.end(), [] (const auto & a, const auto & b) { return a.second > b.second ;});
 
     size_t i = 0;
-    for(i; i < vect.size(); i++){
-    	if(vect[i].first == "war"){
-    		cout << "Nombre de mots war = " << vect[i].second << endl;
-    	}
-    	if(vect[i].first == "peace"){
-    	    cout << "Nombre de mots peace = " << vect[i].second << endl;
-    	}
-    	if(vect[i].first == "toto"){
-    		cout << "Nombre de mots toto = " << vect[i].second << endl;
-    	}
+    for(HashTable::Entry & elem : h_tab){
+    	cout << i <<"eme mot le plus fréquent = " << elem.first << endl;
+    	++i;
+    	if(i >= 10)
+    		break;
 
     }
-    const string w = "war";
-
-    //cout << "Nombre de mots war = " << count_if_equal(vect.begin(), vect.end(), w) << endl;
     return 0;
 }
-*/
 

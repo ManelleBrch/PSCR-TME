@@ -14,7 +14,7 @@ template <typename K, typename V>
 
 class HashTable {
 
-
+public:
 	class Entry{
 	public:
 		const K key;
@@ -23,21 +23,20 @@ class HashTable {
 		Entry(K k, V v) : key(k), value(v){}
 	};
 
+private:
+
 	typedef std::vector<std::forward_list<Entry>> buckets_t;
 
 	buckets_t buckets;
 	size_t taille;
 
+public:
 	class iterator{
 		buckets_t & buck;
 		typename buckets_t::iterator vit;
 		typename std::forward_list<Entry>::iterator lit;
 
-		iterator(buckets_t & buckets){
-			buck=buckets;
-			vit = buck.begin();
-			lit = vit.begin();
-		}
+		iterator(const buckets_t & buckets, const typename buckets_t::iterator vit, typename std::forward_list<Entry>::iterator lit) : buck(buckets), vit(vit), lit(lit){}
 
 		iterator & operator++(){
 			++lit;
@@ -68,6 +67,23 @@ class HashTable {
 
 		Entry & operator*(){
 			return *lit;
+		}
+
+		iterator begin(){
+
+			while(vit.begin() == nullptr && vit != buck.end()){
+				++vit;
+			}
+
+			if(vit != buckets.end){
+				return iterator(buckets, vit, vit.begin());
+			}
+
+			return iterator(buckets, vit, nullptr);
+		}
+
+		iterator end(){
+			return iterator(buckets, buckets.end(), nullptr);
 		}
 
 
