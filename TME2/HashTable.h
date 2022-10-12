@@ -40,18 +40,36 @@ class HashTable {
 		}
 
 		iterator & operator++(){
+			++lit;
+
 			if(lit == nullptr){
-				vit++;
-			}
-			else{
-				++lit;
-				if(lit == nullptr){
-					vit++;
+				++vit;
+				while(vit.begin() == nullptr && vit != buck.end()){
+					++vit;
+				}
+
+
+				if(vit != buck.end()){
 					lit = vit.begin();
 				}
 			}
+
 			return *this;
 		}
+
+		bool operator!=(const iterator &other){
+
+			if(vit != other.vit || lit != other.lit){
+				return true;
+			}
+
+			return false;
+		}
+
+		Entry & operator*(){
+			return *lit;
+		}
+
 
 	};
 
