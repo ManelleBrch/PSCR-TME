@@ -36,6 +36,7 @@ public:
 		typename buckets_t::iterator vit;
 		typename std::forward_list<Entry>::iterator lit;
 
+	public:
 		iterator(const buckets_t & buckets, const typename buckets_t::iterator vit, typename std::forward_list<Entry>::iterator lit) : buck(buckets), vit(vit), lit(lit){}
 
 		iterator & operator++(){

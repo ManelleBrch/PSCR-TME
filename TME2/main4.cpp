@@ -3,7 +3,7 @@
 #include <regex>
 #include <chrono>
 #include <string>
-#include "HashTable.h"
+#include <unordered_map>
 
 template <typename iterator>
 
@@ -45,7 +45,7 @@ int main () {
 	// une regex qui reconnait les caractères anormaux (négation des lettres)
 	regex re( R"([^a-zA-Z])");
 
-	HashTable<string, int> h_tab;
+	unordered_map<string, int> map;
 
 	while (input >> word) {
 		// élimine la ponctuation et les caractères spéciaux
@@ -53,12 +53,12 @@ int main () {
 		// passe en lowercase
 		transform(word.begin(),word.end(),word.begin(),::tolower);
 
-		int * val_cpt = h_tab.get(word);
-		if(val_cpt){
-			*val_cpt+=1;
+		auto val_cpt = map.find(word);
+		if(val_cpt != map.end()){
+			val_cpt->second++;
 		}
-		if(!val_cpt){
-			h_tab.put(word, 1);
+		if(val_cpt == map.end()){
+			map.insert({word, 1});
 		}
 
 		// word est maintenant "tout propre"
@@ -77,25 +77,24 @@ int main () {
               << "ms.\n";
 
     cout << "Found a total of " << nombre_lu << " words." << endl;
-    cout << "Nombre de mots différents = " << h_tab.size() << endl;
+    cout << "Nombre de mots différents = " << map.size() << endl;
     //cout << "Nombre de mots différents = " << count(h_tab.begin(), h_tab.end()) << endl;
 
 
     vector< pair<string, int> > vect;
-    for(auto & elem : h_tab){
-    	vect.push_back(std::make_pair(elem.key, elem.value));
+    for(auto & elem : map){
+    	vect.push_back(std::make_pair(elem.first, elem.second));
     }
 
     std::sort(vect.begin(), vect.end(), [] (const auto & a, const auto & b) { return a.second > b.second ;});
 
     size_t i = 0;
     for(auto & elem : vect){
-    	cout << i <<"eme mot le plus fréquent = " << elem.first << endl;
+    	cout << i+1 <<"eme mot le plus fréquent = " << elem.first << " avec une frequence de " << elem.second << endl;
     	++i;
     	if(i >= 10)
     		break;
 
     }
     return 0;
-}
-*/
+}*/
