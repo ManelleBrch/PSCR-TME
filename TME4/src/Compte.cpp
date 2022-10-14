@@ -7,7 +7,7 @@ namespace pr {
 void Compte::crediter (unsigned int val) {
 	unique_lock<recursive_mutex> g(m);
 	solde+=val ;
-	cout << "je credite" << endl;
+	//cout << "je credite" << endl;
 }
 bool Compte::debiter (unsigned int val) {
 	unique_lock<recursive_mutex> g(m);
@@ -15,7 +15,7 @@ bool Compte::debiter (unsigned int val) {
 	if (doit) {
 		solde-=val ;
 
-		cout << "je debite" << endl;
+		//cout << "je debite" << endl;
 	}
 	return doit;
 }
