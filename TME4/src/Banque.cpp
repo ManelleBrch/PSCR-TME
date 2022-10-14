@@ -9,9 +9,22 @@ namespace pr {
 void Banque::transfert(size_t deb, size_t cred, unsigned int val) {
 	Compte & debiteur = comptes[deb];
 	Compte & crediteur = comptes[cred];
+	if(deb < cred){
+		debiteur.lock();
+		crediteur.lock();
+	}
+
+	if(deb > cred){
+		crediteur.lock();
+		debiteur.lock();
+	}
+
 	if (debiteur.debiter(val)) {
 		crediteur.crediter(val);
 	}
+	debiteur.unlock();
+	crediteur.unlock();
+
 }
 size_t Banque::size() const {
 	return comptes.size();
