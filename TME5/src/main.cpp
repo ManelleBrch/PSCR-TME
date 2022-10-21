@@ -6,6 +6,8 @@
 #include <fstream>
 #include <limits>
 #include <random>
+#include "PixelJob.h"
+#include "Pool.h"
 
 using namespace std;
 using namespace pr;
@@ -125,10 +127,17 @@ int main () {
 	// Les couleurs des pixels dans l'image finale
 	Color * pixels = new Color[scene.getWidth() * scene.getHeight()];
 
+	Pool pool(1000);
+
 	// pour chaque pixel, calculer sa couleur
 	for (int x =0 ; x < scene.getWidth() ; x++) {
 		for (int  y = 0 ; y < scene.getHeight() ; y++) {
-			// le point de l'ecran par lequel passe ce rayon
+
+			Job * j = new PixelJob(x, y, screen, scene, pixels, lights);
+			pool.submit(j);
+
+
+			/*// le point de l'ecran par lequel passe ce rayon
 			auto & screenPoint = screen[y][x];
 			// le rayon a inspecter
 			Rayon  ray(scene.getCameraPos(), screenPoint);
@@ -147,7 +156,7 @@ int main () {
 				// mettre a jour la couleur du pixel dans l'image finale.
 				pixel = finalcolor;
 			}
-
+		*/
 		}
 	}
 
