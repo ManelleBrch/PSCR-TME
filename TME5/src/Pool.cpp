@@ -30,6 +30,8 @@ namespace pr{
 		queue.push(job);
 	}
 
-	Pool::~Pool(){}
+	Pool::~Pool(){
+		stop();
+	}
 
 }
