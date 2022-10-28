@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int main () {
+/*int main () {
 	int nbfils = 0;
 	const int N = 3;
 	std::cout << "main pid=" << getpid() << std::endl;
@@ -39,4 +39,4 @@ int main () {
 		}
 	}
 	return 0;
-}
+}*/
