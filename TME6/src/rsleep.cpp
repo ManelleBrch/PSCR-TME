@@ -14,3 +14,14 @@ void randsleep() {
     tosleep = remain;
   }
 }
+
+/*
+ * Q4) nanosleep sert à suspendre l'execution d'un thread jusqu'à un temps indiqué dans le premier argument
+ * ou jusqu'à réception d'un signal -> si réception d'un signal renvoie -1 avec errno = EINTR + le temps restant dans le premier argument
+ *
+ * pq while et pas if?
+*/
+
+/*
+ * Q5) On utilise srand(time(0));
+*/
