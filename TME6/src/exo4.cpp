@@ -17,16 +17,19 @@ int wait_till_pid(pid_t pid){
 	}
 }
 
+int expire;
+
+void handler_alrm(int sig){
+	std::cout<<"Signal SIGALRM reçu" << std::endl;
+	expire = 1;
+}
 
 int wait_till_pid(pid_t pid, int sec){
-	int expire = 0; //si epire = 0 -> temps pas écoulé sinon si = 1 temps écoulé
+	expire = 0; //si epire = 0 -> temps pas écoulé sinon si = 1 temps écoulé
 
 	struct sigaction act_alrm;
 	sigemptyset(&act_alrm.sa_mask);
-	act_alrm.sa_handler = [&expire] (int) {
-		std::cout<<"Signal SIGCHLD reçu" << std::endl;
-		expire = 1;
-	};
+	act_alrm.sa_handler = handler_alrm;
 	act_alrm.sa_flags = 0;
 	sigaction(SIGALRM, &act_alrm, nullptr);
 
@@ -39,7 +42,7 @@ int wait_till_pid(pid_t pid, int sec){
 
 	sigset_t sigset;
 	sigfillset(&sigset);
-	sigdelset(&sigset,SIGALRM || SIGCHLD);
+	sigdelset(&sigset,SIGALRM | SIGCHLD);
 
 	while(true){
 		sigsuspend(&sigset);
@@ -59,5 +62,6 @@ int wait_till_pid(pid_t pid, int sec){
 		}
 	}
 }
+
 
 
