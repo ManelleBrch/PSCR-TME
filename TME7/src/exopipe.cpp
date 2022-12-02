@@ -2,12 +2,13 @@
 #include <stdio.h>
 #include <iostream>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <string.h>
 
 int main(int argc, const char ** argv){
-	const char ** tab1;
-	const char ** tab2;
+	char ** tab1;
+	char ** tab2;
 	int len1 = 0;
 	int len2 = 0;
 	int pospipe=0;
@@ -20,14 +21,14 @@ int main(int argc, const char ** argv){
 		if(strcmp(argv[i],"|") == 0){
 			pospipe = i;
 			len1 = len2;
-			tab1 = new const char*[len1+1];
+			tab1 = new char*[len1+1];
 			len2 = 0;
 		}
 		else{
 			len2++;
 		}
 	}
-	tab2 = new const char*[len2+1];
+	tab2 = new char*[len2+1];
 	int i = 0;
 	while(i < len1 - 1){
 		tab1[i] = argv[i+1];
@@ -62,7 +63,13 @@ int main(int argc, const char ** argv){
 			exit(3);
 		}
 	}
-	else{
+
+	if((fils = fork() == -1)){
+		perror("fork");
+		exit(2);
+	}
+
+	if(fils == 0){
 		dup2(tubeDesc[0],STDIN_FILENO);
 		close(tubeDesc[0]);
 		close(tubeDesc[1]);
@@ -73,15 +80,10 @@ int main(int argc, const char ** argv){
 	}
 
 
+	close(tubeDesc[0]);
+	close(tubeDesc[1]);
+	wait(nullptr);
+	wait(nullptr);
 
-
-
-
-
-
-
-
-
-
-
+	return 0;
 }
