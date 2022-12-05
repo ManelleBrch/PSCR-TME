@@ -23,7 +23,8 @@ void consomateur (Stack<char> * stack) {
 }
 
 int main () {
-	Stack<char> * s = new Stack<char>();
+	void * addr = mmap(0, sizeof(Stack<char>), PROT_READ|PROT_WRITE, MAP_ANONYMOUS|MAP_SHARED, -1, 0);
+	Stack<char> * s = new (addr) Stack<char>();
 
 	pid_t pp = fork();
 	if (pp==0) {
@@ -40,7 +41,8 @@ int main () {
 	wait(0);
 	wait(0);
 
-	delete s;
+	sr->~SharedResult();
+	munmap(addr, sizeof(SharedResult<char>));
 	return 0;
 }
 
