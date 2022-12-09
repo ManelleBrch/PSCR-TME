@@ -7,8 +7,8 @@
 #include <string.h>
 
 int main(int argc, const char ** argv){
-	char ** tab1;
-	char ** tab2;
+	const char ** tab1;
+	const char ** tab2;
 	int len1 = 0;
 	int len2 = 0;
 	int pospipe=0;
@@ -21,20 +21,20 @@ int main(int argc, const char ** argv){
 		if(strcmp(argv[i],"|") == 0){
 			pospipe = i;
 			len1 = len2;
-			tab1 = new char*[len1+1];
+			tab1 = new const char*[len1+1];
 			len2 = 0;
 		}
 		else{
 			len2++;
 		}
 	}
-	tab2 = new char*[len2+1];
+	tab2 = new const char*[len2+1];
 	int i = 0;
 	while(i < len1 - 1){
 		tab1[i] = argv[i+1];
 		i++;
 	}
-	tab1[len1 - 1] = "NULL";
+	tab1[len1 - 1] = 0;
 	i = argc - len2;
 	int j=0;
 	while(i < argc){
@@ -42,7 +42,7 @@ int main(int argc, const char ** argv){
 		j++;
 		i++;
 	}
-	tab2[len2 - 1] = "NULL";
+	tab2[len2 - 1] = 0;
 
 	if(pipe(tubeDesc) == -1){
 		perror("pipe");

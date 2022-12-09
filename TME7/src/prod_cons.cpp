@@ -67,8 +67,8 @@ int main () {
 	wait(0);
 	wait(0);
 
-	sr->~SharedResult();
-	munmap(addr, sizeof(SharedResult<char>));
+	s->~Stack<char>();
+	munmap(addr, sizeof(Stack<char>));
 
 	/*si pas anonyme*/
 	/*
