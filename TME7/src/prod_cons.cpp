@@ -30,7 +30,7 @@ void handler(int signal){
 	}
 }
 
-int main () {
+int main1 () {
 
 	void * addr = mmap(0, sizeof(Stack<char>), PROT_READ|PROT_WRITE, MAP_ANONYMOUS|MAP_SHARED, -1, 0);
 

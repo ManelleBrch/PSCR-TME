@@ -103,8 +103,7 @@ client_LDADD = $(LDADD)
 am_server_OBJECTS = server.$(OBJEXT)
 server_OBJECTS = $(am_server_OBJECTS)
 server_LDADD = $(LDADD)
-am_server2_OBJECTS = TCPServer.$(OBJEXT) ServerSocket.$(OBJEXT) \
-	Socket.$(OBJEXT) server2.$(OBJEXT)
+am_server2_OBJECTS = server2.$(OBJEXT)
 server2_OBJECTS = $(am_server2_OBJECTS)
 server2_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_$(V))
@@ -122,9 +121,7 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/ServerSocket.Po \
-	./$(DEPDIR)/Socket.Po ./$(DEPDIR)/TCPServer.Po \
-	./$(DEPDIR)/client.Po ./$(DEPDIR)/server.Po \
+am__depfiles_remade = ./$(DEPDIR)/client.Po ./$(DEPDIR)/server.Po \
 	./$(DEPDIR)/server2.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
@@ -282,7 +279,7 @@ AM_LDFLAGS = -pthread
 #cible_LDFLAGS = -pthread 
 server_SOURCES = ServerSocket.h  Socket.h  server.cpp
 client_SOURCES = Socket.h client.cpp
-server2_SOURCES = TCPServer.h TCPServer.cpp ServerSocket.h ServerSocket.cpp Socket.h Socket.cpp server2.cpp
+server2_SOURCES = TCPServer.h  ServerSocket.h  Socket.h  server2.cpp
 all: all-am
 
 .SUFFIXES:
@@ -338,9 +335,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-include ./$(DEPDIR)/ServerSocket.Po # am--include-marker
-include ./$(DEPDIR)/Socket.Po # am--include-marker
-include ./$(DEPDIR)/TCPServer.Po # am--include-marker
 include ./$(DEPDIR)/client.Po # am--include-marker
 include ./$(DEPDIR)/server.Po # am--include-marker
 include ./$(DEPDIR)/server2.Po # am--include-marker
@@ -491,10 +485,7 @@ clean: clean-am
 clean-am: clean-generic clean-noinstPROGRAMS mostlyclean-am
 
 distclean: distclean-am
-		-rm -f ./$(DEPDIR)/ServerSocket.Po
-	-rm -f ./$(DEPDIR)/Socket.Po
-	-rm -f ./$(DEPDIR)/TCPServer.Po
-	-rm -f ./$(DEPDIR)/client.Po
+		-rm -f ./$(DEPDIR)/client.Po
 	-rm -f ./$(DEPDIR)/server.Po
 	-rm -f ./$(DEPDIR)/server2.Po
 	-rm -f Makefile
@@ -542,10 +533,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-		-rm -f ./$(DEPDIR)/ServerSocket.Po
-	-rm -f ./$(DEPDIR)/Socket.Po
-	-rm -f ./$(DEPDIR)/TCPServer.Po
-	-rm -f ./$(DEPDIR)/client.Po
+		-rm -f ./$(DEPDIR)/client.Po
 	-rm -f ./$(DEPDIR)/server.Po
 	-rm -f ./$(DEPDIR)/server2.Po
 	-rm -f Makefile

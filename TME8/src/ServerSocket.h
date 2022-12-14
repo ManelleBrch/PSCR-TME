@@ -47,7 +47,11 @@ public :
 		return Socket(fd);
 	}
 
-	void close();
+	void close(){
+		if(socketfd != -1){
+			::close(socketfd);
+		}
+	}
 };
 
 } // ns pr

@@ -17,7 +17,7 @@ server_SOURCES = ServerSocket.h  Socket.h  server.cpp
 
 client_SOURCES = Socket.h client.cpp
  
-server2_SOURCES = TCPServer.h TCPServer.cpp ServerSocket.h ServerSocket.cpp Socket.h Socket.cpp server2.cpp
+server2_SOURCES = TCPServer.h  ServerSocket.h  Socket.h  server2.cpp
 
 
 

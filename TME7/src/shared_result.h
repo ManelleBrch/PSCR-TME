@@ -40,7 +40,7 @@ public:
 
 };
 
-int main(){
+int main2(){
 	void * addr = mmap(0, sizeof(SharedResult<char>), PROT_READ|PROT_WRITE, MAP_ANONYMOUS|MAP_SHARED, -1, 0);
 	SharedResult<char> * sr = new (addr) SharedResult<char>();
 
@@ -70,4 +70,6 @@ int main(){
 	wait(nullptr);
 	sr->~SharedResult();
 	munmap(addr, sizeof(SharedResult<char>));
+
+	return 0;
 }
