@@ -24,6 +24,13 @@ void handler(int sig){
 	}
 }
 
+void handlerFils(int sig){
+	if (sig == SIGINT){
+		cout << "Coup paré" << endl;
+	}
+}
+
+
 
 void attaque (pid_t adversaire){
 	nbattaque ++;
@@ -46,6 +53,30 @@ void defense(){
 
 }
 
+void defenseFils(){
+	nbdefense ++;
+
+	struct sigaction action;
+
+	sigemptyset(&action.sa_mask);
+	action.sa_flags = 0;
+	action.sa_handler = handlerFils;
+
+	sigaction(SIGINT, &action, NULL);
+
+	sigset_t sig;
+	sigfillset(&sig);
+	sigprocmask(SIG_SETMASK, &sig, NULL);
+
+	randsleep();
+
+	sigfillset(&sig);
+	sigdelset(&sig, SIGINT);
+	sigsuspend(&sig);
+
+
+}
+
 void combat(pid_t adversaire){
 	while(true){
 		defense();
@@ -53,13 +84,23 @@ void combat(pid_t adversaire){
 	}
 }
 
-int main(){
+void combatFils(pid_t adversaire){
+	while(true){
+		defenseFils();
+		attaque(adversaire);
+	}
+}
+
+
+int main2(){
 	pid_t pid = fork();
 	if(pid == 0){
-		combat((int)getppid());
+		combatFils((int)getppid());
 	}
 	else{
 		combat(pid);
 	}
+
+	return 0;
 }
 
