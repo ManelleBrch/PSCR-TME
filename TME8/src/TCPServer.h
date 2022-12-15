@@ -12,27 +12,54 @@ namespace pr {
 class TCPServer {
 	ServerSocket * ss; // la socket d'attente si elle est instanciee
 	ConnectionHandler * handler; // le gestionnaire de session passe a la constru
-	std::thread wait_thread;
+	std::thread* wait_thread;
 public :
-	TCPServer(ConnectionHandler * handler): ss(nullptr),handler(handler) {}
+	TCPServer(ConnectionHandler * handler): ss(nullptr),handler(handler), wait_thread(nullptr){}
 	// Tente de creer une socket d'attente sur le port donné
 	bool startServer (int port){
 		ss = new ServerSocket(port);
 		if(ss->isOpen()){
-			while(true){
-				Socket sc = ss->accept();
-				if(sc.isOpen()){
-					ConnectionHandler * clone = handler->clone();
-					threads.emplace_back(clone->handleConnection,sc);
+			//wait_thread = new std::thread(attente, this);
+			//marche pas je sais pas pq
+
+			//version avec une lambda
+			wait_thread = new std::thread([](TCPServer* tcps) {
+				while(true){
+					Socket sc = tcps->getSS()->accept();
+					if(sc.isOpen()){
+						ConnectionHandler * clone = tcps->getHandler()->clone();
+						clone->handleConnection(sc);
+						delete clone;
+					}
 				}
-			}
+			}, this);
+
 		}
 		return false;
+	}
+
+	ServerSocket* getSS(){
+		return ss;
+	}
+
+	ConnectionHandler* getHandler(){
+		return handler;
 	}
 
 	// stoppe le serveur
 	void stopServer () ;
 };
+
+/*void attente(TCPServer *tcps){
+	while(true){
+		Socket sc = tcps->getSS()->accept();
+		if(sc.isOpen()){
+			ConnectionHandler * clone = tcps->getHandler()->clone();
+			clone->handleConnection(sc);
+			delete clone;
+		}
+	}
+}*/
 
 } // ns pr
 
